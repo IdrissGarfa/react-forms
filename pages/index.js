@@ -1,11 +1,48 @@
-import Head from 'next/head'
-import { Inter } from '@next/font/google'
-import Image from 'next/image'
-import formImage from '../public/form.png';
+import Head from "next/head";
+import { Inter } from "@next/font/google";
+import Image from "next/image";
+import formImage from "../public/form.png";
 
-const inter = Inter({ subsets: ['latin'] })
+import { useRouter } from "next/router";
+
+import { useFormik } from "formik";
+import * as Yup from "yup";
+
+const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
+
+  const Router = useRouter();
+
+  const formik = useFormik({
+    // Formik Logic
+
+    initialValues: {
+      name: "",
+      email: "",
+      country: "",
+      terms: "",
+    },
+
+    // Validate Form
+
+    validationSchema: Yup.object({
+      name: Yup.string()
+        .max(20, "Name must be 20 characters or less.")
+        .required("Name is required"),
+      email: Yup.string()
+        .email("Invalid email address")
+        .required("Email is required"),
+      terms: Yup.string().required("Terms of services must be checked before"),
+    }),
+
+    // Submit  Form
+    onSubmit: (values) => {
+      console.log(values);
+      Router.push({pathname: "/success", query: values});
+    },
+  });
+
 
   return (
     <>
@@ -15,65 +52,128 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main className='h-screen flex items-center justify-center'>
-        <form className='bg-white flex rounded-lg'>
-          <div className='flex-1 text-gray-700 p-20'>
-            <h1 className='text-3xl pb-2 font-latoBold'>Let's get started 👋</h1>
-            <p className='text-base mt-2 text-gray-500'>
+      <main className="h-screen flex items-center justify-center">
+        <form
+          onSubmit={formik.handleSubmit}
+          className="bg-white flex rounded-lg"
+        >
+          <div className="flex-1 text-gray-700 p-20">
+            <h1 className="text-3xl pb-2 font-latoBold">
+              Let's get started 👋
+            </h1>
+            <p className="text-base mt-2 text-gray-500">
               Join our E-learning platform today and unlock over 500+ courses
               and digital assets ready to download.
             </p>
-            <div className='mt-6'>
+            <div className="mt-6">
               {/* Name input field  */}
-              <div className='pb-4'>
-                 <label htmlFor="name" className='block font-semibold text-sm pb-2'>Name</label>
-                 <input
-                  className='border-2 border-gray-500 p-2 rounded-md w-full
-                  focus:border-teal-500 focus:ring-teal-500 outline-none'
-                 type="text" id='name' name='name' placeholder='Enter your name' />
+              <div className="pb-4">
+                <label
+                  htmlFor="name"
+                  className={`block font-semibold text-sm pb-2 ${
+                    formik.errors.name ? "text-red-400" : ""
+                  }`}
+                >
+                  {formik.touched.name && formik.errors.name
+                    ? formik.errors.name
+                    : "Name"}
+                </label>
+                <input
+                  value={formik.values.name}
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  className="border-2 border-gray-500 p-2 rounded-md w-full
+                  focus:border-teal-500 focus:ring-teal-500 outline-none"
+                  type="text"
+                  id="name"
+                  name="name"
+                  placeholder="Enter your name"
+                />
               </div>
               {/* Email input field  */}
-              <div className='pb-4'>
-                 <label htmlFor="email" className='block font-semibold text-sm pb-2'>Email</label>
-                 <input
-                  className='border-2 border-gray-500 p-2 rounded-md w-full
-                  focus:border-teal-500 focus:ring-teal-500 outline-none'
-                 type="email" id='email' name='email' placeholder='Enter your email' />
+              <div className="pb-4">
+                <label
+                  htmlFor="email"
+                  className={`block font-semibold text-sm pb-2 ${formik.errors.email ? 'text-red-400' : ''}`}
+                >
+                  {formik.touched.email && formik.errors.email ? formik.errors.email : 'Email'}
+                </label>
+                <input
+                  value={formik.values.email}
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  className={`border-2 border-gray-500 p-2 rounded-md w-full
+                  focus:border-teal-500 focus:ring-teal-500 outline-none ${formik.errors.email ? 'text-red-400' : ''}`}
+                  type="email"
+                  id="email"
+                  name="email"
+                  placeholder="Enter your email"
+                />
               </div>
-               {/* Country input field  */}
-               <div className='pb-4'>
-                 <label htmlFor="country" className='block font-semibold text-sm pb-2'>State</label>
-                 <select name="country" id="country" 
-                      className='border-2 border-gray-500 p-2 rounded-md w-full
-                  focus:border-teal-500 focus:ring-teal-500 outline-none'>
+              {/* Country input field  */}
+              <div className="pb-4">
+                <label
+                  htmlFor="country"
+                  className="block font-semibold text-sm pb-2"
+                >
+                  Country
+                </label>
+                <select
+                  name="country"
+                  id="country"
+                  value={formik.values.country}
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  className={`border-2 border-gray-500 p-2 rounded-md w-full
+                  focus:border-teal-500 focus:ring-teal-500 outline-none ${formik.errors.country ? 'text-red-400' : ''}`}
+                >
                   <option value="United States">United States</option>
                   <option value="United Kingdom">United Kingdom</option>
                   <option value="Germany">Germany</option>
                   <option value="Norway">Norway</option>
-                 </select>
-                 </div>
-                 {/* Terms of service  */}
-                <label htmlFor="terms" className='block font-semibold text-sm pb-2'>Terms of service</label>
-                <div className='pb-4 flex items-center gap-2'>
-                  <input type="checkbox" name="terms" id="terms" 
-                  className='h-5 w-5 text-teal-500 border-2 focus:border-teal-500 focus:ring-teal-500' />
-                  <p className='text-sm font-semibold text-gray-500'>
-                    I agree to the Terms and Services that my data will taken and sold.
-                  </p>
-                </div>
+                </select>
+              </div>
+              {/* Terms of service  */}
+              <label
+                htmlFor="terms"
+                className={`block font-semibold text-sm pb-2 ${formik.errors.terms ? 'text-red-400' : ''}`}
+              >
+                {formik.touched.terms && formik.errors.terms ? formik.errors.terms : 'Terms of service'}
+              </label>
+              <div className="pb-4 flex items-center gap-2">
+                <input
+                  type="checkbox"
+                  name="terms"
+                  id="terms"
+                  value={formik.values.terms}
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  className="h-5 w-5 text-teal-500 border-2 focus:border-teal-500 focus:ring-teal-500"
+                />
+                <p className="text-sm font-semibold text-gray-500">
+                  I agree to the Terms and Services that my data will taken and
+                  sold.
+                </p>
+              </div>
             </div>
-            <button type="submit" className='bg-teal-500 font-semibold text-sm text-white py-3 mt-6 rounded-lg w-full'>Start learning today!</button>
+            <button
+              type="submit"
+              className="bg-teal-500 font-semibold text-sm text-white py-3 mt-6 rounded-lg w-full"
+            >
+              Start learning today!
+            </button>
           </div>
-          <div className='relative flex-1'>
-            <Image 
+          <div className="relative flex-1">
+            <Image
               src={formImage}
-              fill 
-              alt='form-learn'
-              className='object-cover rounded-lg'
+              fill
+              alt="form-learn"
+              priority
+              className="object-cover rounded-lg"
             />
           </div>
         </form>
       </main>
     </>
-  )
+  );
 }
