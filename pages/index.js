@@ -1,11 +1,12 @@
 import Head from 'next/head'
-import Image from 'next/image'
 import { Inter } from '@next/font/google'
-import styles from '../styles/Home.module.css'
+import Image from 'next/image'
+import formImage from '../public/form.png';
 
 const inter = Inter({ subsets: ['latin'] })
 
 export default function Home() {
+
   return (
     <>
       <Head>
@@ -14,109 +15,64 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main className={styles.main}>
-        <div className={styles.description}>
-          <p>
-            Get started by editing&nbsp;
-            <code className={styles.code}>pages/index.js</code>
-          </p>
-          <div>
-            <a
-              href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              By{' '}
-              <Image
-                src="/vercel.svg"
-                alt="Vercel Logo"
-                className={styles.vercelLogo}
-                width={100}
-                height={24}
-                priority
-              />
-            </a>
+      <main className='h-screen flex items-center justify-center'>
+        <form className='bg-white flex rounded-lg'>
+          <div className='flex-1 text-gray-700 p-20'>
+            <h1 className='text-3xl pb-2 font-latoBold'>Let's get started 👋</h1>
+            <p className='text-base mt-2 text-gray-500'>
+              Join our E-learning platform today and unlock over 500+ courses
+              and digital assets ready to download.
+            </p>
+            <div className='mt-6'>
+              {/* Name input field  */}
+              <div className='pb-4'>
+                 <label htmlFor="name" className='block font-semibold text-sm pb-2'>Name</label>
+                 <input
+                  className='border-2 border-gray-500 p-2 rounded-md w-full
+                  focus:border-teal-500 focus:ring-teal-500 outline-none'
+                 type="text" id='name' name='name' placeholder='Enter your name' />
+              </div>
+              {/* Email input field  */}
+              <div className='pb-4'>
+                 <label htmlFor="email" className='block font-semibold text-sm pb-2'>Email</label>
+                 <input
+                  className='border-2 border-gray-500 p-2 rounded-md w-full
+                  focus:border-teal-500 focus:ring-teal-500 outline-none'
+                 type="email" id='email' name='email' placeholder='Enter your email' />
+              </div>
+               {/* Country input field  */}
+               <div className='pb-4'>
+                 <label htmlFor="country" className='block font-semibold text-sm pb-2'>State</label>
+                 <select name="country" id="country" 
+                      className='border-2 border-gray-500 p-2 rounded-md w-full
+                  focus:border-teal-500 focus:ring-teal-500 outline-none'>
+                  <option value="United States">United States</option>
+                  <option value="United Kingdom">United Kingdom</option>
+                  <option value="Germany">Germany</option>
+                  <option value="Norway">Norway</option>
+                 </select>
+                 </div>
+                 {/* Terms of service  */}
+                <label htmlFor="terms" className='block font-semibold text-sm pb-2'>Terms of service</label>
+                <div className='pb-4 flex items-center gap-2'>
+                  <input type="checkbox" name="terms" id="terms" 
+                  className='h-5 w-5 text-teal-500 border-2 focus:border-teal-500 focus:ring-teal-500' />
+                  <p className='text-sm font-semibold text-gray-500'>
+                    I agree to the Terms and Services that my data will taken and sold.
+                  </p>
+                </div>
+            </div>
+            <button type="submit" className='bg-teal-500 font-semibold text-sm text-white py-3 mt-6 rounded-lg w-full'>Start learning today!</button>
           </div>
-        </div>
-
-        <div className={styles.center}>
-          <Image
-            className={styles.logo}
-            src="/next.svg"
-            alt="Next.js Logo"
-            width={180}
-            height={37}
-            priority
-          />
-          <div className={styles.thirteen}>
-            <Image
-              src="/thirteen.svg"
-              alt="13"
-              width={40}
-              height={31}
-              priority
+          <div className='relative flex-1'>
+            <Image 
+              src={formImage}
+              fill 
+              alt='form-learn'
+              className='object-cover rounded-lg'
             />
           </div>
-        </div>
-
-        <div className={styles.grid}>
-          <a
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <h2 className={inter.className}>
-              Docs <span>-&gt;</span>
-            </h2>
-            <p className={inter.className}>
-              Find in-depth information about Next.js features and&nbsp;API.
-            </p>
-          </a>
-
-          <a
-            href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <h2 className={inter.className}>
-              Learn <span>-&gt;</span>
-            </h2>
-            <p className={inter.className}>
-              Learn about Next.js in an interactive course with&nbsp;quizzes!
-            </p>
-          </a>
-
-          <a
-            href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <h2 className={inter.className}>
-              Templates <span>-&gt;</span>
-            </h2>
-            <p className={inter.className}>
-              Discover and deploy boilerplate example Next.js&nbsp;projects.
-            </p>
-          </a>
-
-          <a
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <h2 className={inter.className}>
-              Deploy <span>-&gt;</span>
-            </h2>
-            <p className={inter.className}>
-              Instantly deploy your Next.js site to a shareable URL
-              with&nbsp;Vercel.
-            </p>
-          </a>
-        </div>
+        </form>
       </main>
     </>
   )
